@@ -10,7 +10,8 @@ class Tree
   attr_reader :root
 
   def initialize(array)
-    @root = build_tree(array.sort.uniq)
+    array.sort!.uniq!
+    @root = build_tree(array, 0, array.length - 1)
   end
 
   # Algorithm
@@ -20,8 +21,14 @@ class Tree
   # 4. Recursively do following steps, 5 & 6
   # 5. Calculate mid of left subarray and make it root of left subtree of A
   # 6. Calculate mid of right subarray and make it root of right subtree of A
-  def build_tree(array)
-    array
+  def build_tree(array, start, a_end)
+    return nil if start > a_end
+
+    mid = (start + a_end) / 2
+    node = Node.new(array[mid])
+    node.left = build_tree(array, start, mid - 1)
+    node.right = build_tree(array, mid + 1, a_end)
+    node
   end
 
   def insert(value); end
@@ -43,4 +50,10 @@ class Tree
   def balanced?; end
 
   def rebalance; end
+
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
 end

@@ -5,11 +5,19 @@ class Node
   # As a bonus, try including the Comparable module and compare nodes using
   # their data attribute.
   include Comparable
-  attr_accessor :data, :left_child, :right_child
+  attr_accessor :data, :left, :right
 
-  # def data; end
+  def initialize(data, left = nil, right = nil)
+    @data = data
+    @left = left
+    @right = right
+  end
 
-  # def left_child; end
+  def <=>(other)
+    data <=> other.data
+  end
 
-  # def right_child; end
+  def inspect
+    @data
+  end
 end

@@ -7,6 +7,10 @@ require_relative 'tree'
 # be sure to always remove duplicate values or check for an existing
 # value before inserting.
 
-tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+tree = Tree.new(array)
+print array.sort.uniq, "\n"
 puts tree
 print tree.root, "\n"
+
+tree.pretty_print
