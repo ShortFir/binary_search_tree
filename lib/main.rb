@@ -8,9 +8,9 @@ require_relative 'tree'
 # value before inserting.
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+print "\n", array.sort!.uniq!, "\n\n"
 tree = Tree.new(array)
-print array.sort.uniq, "\n"
-puts tree
-print tree.root, "\n"
-
+puts
 tree.pretty_print
+puts
+puts tree.find(1000).data

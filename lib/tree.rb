@@ -35,7 +35,10 @@ class Tree
 
   def delete(value); end
 
-  def find(value); end
+  def find(value)
+    node = search_tree(value)
+    node.nil? ? 'ERROR! No node found.' : node
+  end
 
   def level_order; end
 
@@ -51,9 +54,28 @@ class Tree
 
   def rebalance; end
 
+  # rubocop:disable Style/OptionalBooleanParameter
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
+  # rubocop:enable Style/OptionalBooleanParameter
+
+  private
+
+  def <=>(other)
+    data <=> other.data
+  end
+
+  def search_tree(value, node = @root)
+    return nil if node.nil?
+    return node if node.data == value
+
+    if value < node.data
+      search_tree(value, node.left)
+    elsif value > node.data
+      search_tree(value, node.right)
+    end
   end
 end
