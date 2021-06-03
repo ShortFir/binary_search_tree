@@ -13,6 +13,7 @@ class Node
     @right = right
   end
 
+  # Useful for string length...anything else?
   def <=>(other)
     data <=> other.data
   end

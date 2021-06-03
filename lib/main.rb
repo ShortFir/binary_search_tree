@@ -13,4 +13,6 @@ tree = Tree.new(array)
 puts
 tree.pretty_print
 puts
-puts tree.find(1000).data
+puts tree.find(23).data
+puts
+puts tree.root.data == tree.root.right.data
