@@ -13,12 +13,16 @@ class Node
     @right = right
   end
 
-  # Useful for string length...anything else?
-  def <=>(other)
-    data <=> other.data
+  def to_s
+    @data.to_s
   end
 
-  def inspect
-    @data
-  end
+  # Useful for string length...anything else?
+  # def <=>(other)
+  #   data <=> other.data
+  # end
+
+  # def inspect
+  #   @data
+  # end
 end

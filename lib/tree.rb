@@ -11,7 +11,7 @@ class Tree
 
   def initialize(array)
     array.sort!.uniq!
-    @root = build_tree(array, 0, array.length - 1)
+    @root = build_tree(array)
   end
 
   # Algorithm
@@ -21,23 +21,53 @@ class Tree
   # 4. Recursively do following steps, 5 & 6
   # 5. Calculate mid of left subarray and make it root of left subtree of A
   # 6. Calculate mid of right subarray and make it root of right subtree of A
-  def build_tree(array, start, a_end)
-    return nil if start > a_end
+  def build_tree(array, array_start = 0, array_end = array.length - 1)
+    return nil if array_start > array_end
 
-    mid = (start + a_end) / 2
-    node = Node.new(array[mid])
-    node.left = build_tree(array, start, mid - 1)
-    node.right = build_tree(array, mid + 1, a_end)
+    array_middle = (array_start + array_end) / 2
+    node = Node.new(array[array_middle])
+    node.left = build_tree(array, array_start, array_middle - 1)
+    node.right = build_tree(array, array_middle + 1, array_end)
     node
   end
 
-  def insert(value); end
+  # Only add as leaf
+  # Less than, go left...add to left if nothing there
+  # more than, right etc...
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
+  def insert(value, node = @root)
+    return 'Value already exists.' if node.data == value
+
+    if value < node.data
+      if node.left.nil?
+        node.left = Node.new(value)
+      else
+        insert(value, node.left)
+      end
+    elsif value > node.data
+      if node.right.nil?
+        node.right = Node.new(value)
+      else
+        insert(value, node.right)
+      end
+    end
+  end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
 
   def delete(value); end
 
-  def find(value)
-    node = search_tree(value)
-    node.nil? ? 'ERROR! No node found.' : node
+  # TODO: Change error return to fit later methods
+  def find(value, node = @root)
+    # node = search_tree(value)
+    # node.nil? ? 'ERROR! No node found.' : node
+    return 'Value not found.' if node.nil?
+    return node if node.data == value
+
+    if value < node.data
+      find(value, node.left)
+    elsif value > node.data
+      find(value, node.right)
+    end
   end
 
   def level_order; end
@@ -62,20 +92,20 @@ class Tree
   end
   # rubocop:enable Style/OptionalBooleanParameter
 
-  private
+  # private
 
-  def <=>(other)
-    data <=> other.data
-  end
+  # def <=>(other)
+  #   data <=> other.data
+  # end
 
-  def search_tree(value, node = @root)
-    return nil if node.nil?
-    return node if node.data == value
+  # def search_tree(value, node = @root)
+  #   return nil if node.nil?
+  #   return node if node.data == value
 
-    if value < node.data
-      search_tree(value, node.left)
-    elsif value > node.data
-      search_tree(value, node.right)
-    end
-  end
+  #   if value < node.data
+  #     search_tree(value, node.left)
+  #   elsif value > node.data
+  #     search_tree(value, node.right)
+  #   end
+  # end
 end
