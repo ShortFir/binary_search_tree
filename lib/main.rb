@@ -8,15 +8,6 @@ require_relative 'tree'
 # value before inserting.
 
 # array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-# print "\n", array.sort!.uniq!, "\n\n"
-# tree = Tree.new(array)
-# puts
-# tree.pretty_print
-# puts
-# puts tree.find(23).data
-# puts
-# puts tree.root.data == tree.root.right.data
-
 array = Array.new(25) { rand(1..100) }
 tree = Tree.new(array)
 
