@@ -54,7 +54,26 @@ class Tree
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
 
-  def delete(value); end
+  # 3 cases
+  # delete leaf, ie 0 children
+  # delete node with 1 child
+  # delete node with 2 children
+  def delete(value)
+    node = find(value)
+    return node if node == 'Value not found.'
+
+    case number_of_children(node)
+    when 0
+      # DO. method 0
+      zero_children_delete(value)
+    when 1
+      # DO. method 1
+      '1 children'
+    when 2
+      # DO. method 2
+      '2 children'
+    end
+  end
 
   # TODO: Change error return to fit later methods
   def find(value, node = @root)
@@ -92,7 +111,44 @@ class Tree
   end
   # rubocop:enable Style/OptionalBooleanParameter
 
-  # private
+  private
+
+  def number_of_children(node)
+    if node.left.nil? && node.right.nil?
+      0
+    elsif !node.left.nil? && !node.right.nil?
+      2
+    else
+      1
+    end
+  end
+
+  # TODO: Modify find() with this combination?
+  # rubocop:disable Metrics/MethodLength
+  def find_parent_child(value, node = @root)
+    if value < node.data
+      if node.left.data == value
+        [node, 'left']
+      else
+        find_parent_child(value, node.left)
+      end
+    elsif value > node.data
+      if node.right.data == value
+        [node, 'right']
+      else
+        find_parent_child(value, node.right)
+      end
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def zero_children_delete(value)
+    parent, direction = find_parent_child(value)
+    case direction
+    when 'left' then parent.left = nil
+    when 'right' then parent.right = nil
+    end
+  end
 
   # def <=>(other)
   #   data <=> other.data

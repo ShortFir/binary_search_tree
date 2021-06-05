@@ -7,15 +7,18 @@ require_relative 'tree'
 # be sure to always remove duplicate values or check for an existing
 # value before inserting.
 
-# array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-array = Array.new(25) { rand(1..100) }
+array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+# array = Array.new(25) { rand(1..100) }
 tree = Tree.new(array)
 
 print "\n#{array.sort.uniq}, length = #{array.sort.uniq.length}\n\n"
 tree.pretty_print
 puts
-print 'find(23) = ', tree.find(23), "\n"
+print 'find(7) = ', tree.find(7), "\n"
 puts
 print 'insert(66) = ', tree.insert(66), "\n"
+tree.pretty_print
+puts
+print 'delete(66) = ', tree.delete(66), "\n"
 tree.pretty_print
 puts
