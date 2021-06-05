@@ -3,6 +3,7 @@
 require_relative 'node'
 
 # Tree
+# rubocop:disable Metrics/ClassLength
 class Tree
   # As a bonus, try including the Comparable module and compare nodes using
   # their data attribute.
@@ -64,11 +65,9 @@ class Tree
 
     case number_of_children(node)
     when 0
-      # DO. method 0
       zero_children_delete(value)
     when 1
-      # DO. method 1
-      '1 children'
+      one_child_delete(value)
     when 2
       # DO. method 2
       '2 children'
@@ -150,6 +149,18 @@ class Tree
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
+  def one_child_delete(value)
+    parent, direction = find_parent_child(value)
+    case direction
+    when 'left'
+      parent.left = (parent.left.left.nil? ? parent.left.right : parent.left.left)
+    when 'right'
+      parent.right = (parent.right.left.nil? ? parent.right.right : parent.right.left)
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+
   # def <=>(other)
   #   data <=> other.data
   # end
@@ -165,3 +176,4 @@ class Tree
   #   end
   # end
 end
+# rubocop:enable Metrics/ClassLength

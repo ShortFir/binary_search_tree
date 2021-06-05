@@ -19,6 +19,6 @@ puts
 print 'insert(66) = ', tree.insert(66), "\n"
 tree.pretty_print
 puts
-print 'delete(66) = ', tree.delete(66), "\n"
+print 'delete(23) = ', tree.delete(23), "\n"
 tree.pretty_print
 puts
