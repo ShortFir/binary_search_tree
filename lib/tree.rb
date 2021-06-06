@@ -5,9 +5,6 @@ require_relative 'node'
 # Tree
 # rubocop:disable Metrics/ClassLength
 class Tree
-  # As a bonus, try including the Comparable module and compare nodes using
-  # their data attribute.
-  include Comparable
   attr_reader :root
 
   def initialize(array)
@@ -139,8 +136,10 @@ class Tree
   def zero_child_delete(node)
     parent, direction = find_parent(node)
     case direction
-    when 'left' then parent.left = nil
-    when 'right' then parent.right = nil
+    when 'left'
+      parent.left = nil
+    when 'right'
+      parent.right = nil
     end
   end
 
@@ -156,22 +155,34 @@ class Tree
   end
   # rubocop:enable Metrics/AbcSize
 
-  def two_child_delete(value)
-    
+  # rubocop:disable Metrics/MethodLength
+  def two_child_delete(node)
+    next_highest = find_next_highest(node.right)
+
+    one_child_delete(next_highest)
+
+    next_highest.left = node.left
+    next_highest.right = node.right
+
+    if node == @root
+      @root = next_highest
+    else
+      parent, direction = find_parent(node)
+      case direction
+      when 'left'
+        parent.left = next_highest
+      when 'right'
+        parent.right = next_highest
+      end
+    end
+    node.data
   end
-  # def <=>(other)
-  #   data <=> other.data
-  # end
+  # rubocop:enable Metrics/MethodLength
 
-  # def search_tree(value, node = @root)
-  #   return nil if node.nil?
-  #   return node if node.data == value
+  def find_next_highest(node)
+    return node if node.left.nil?
 
-  #   if value < node.data
-  #     search_tree(value, node.left)
-  #   elsif value > node.data
-  #     search_tree(value, node.right)
-  #   end
-  # end
+    find_next_highest(node.left)
+  end
 end
 # rubocop:enable Metrics/ClassLength
