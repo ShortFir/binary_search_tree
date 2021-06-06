@@ -22,13 +22,13 @@ class Tree
   # 4. Recursively do following steps, 5 & 6
   # 5. Calculate mid of left subarray and make it root of left subtree of A
   # 6. Calculate mid of right subarray and make it root of right subtree of A
-  def build_tree(array, array_start = 0, array_end = array.length - 1)
-    return nil if array_start > array_end
+  def build_tree(array, start = 0, array_end = array.length - 1)
+    return nil if start > array_end
 
-    array_middle = (array_start + array_end) / 2
-    node = Node.new(array[array_middle])
-    node.left = build_tree(array, array_start, array_middle - 1)
-    node.right = build_tree(array, array_middle + 1, array_end)
+    middle = (start + array_end) / 2
+    node = Node.new(array[middle])
+    node.left = build_tree(array, start, middle - 1)
+    node.right = build_tree(array, middle + 1, array_end)
     node
   end
 
@@ -56,28 +56,23 @@ class Tree
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
 
   # 3 cases
-  # delete leaf, ie 0 children
+  # delete leaf, ie 0 child
   # delete node with 1 child
-  # delete node with 2 children
+  # delete node with 2 child
   def delete(value)
     node = find(value)
-    return node if node == 'Value not found.'
+    return node if node.is_a?(String)
 
     case number_of_children(node)
-    when 0
-      zero_children_delete(value)
-    when 1
-      one_child_delete(value)
-    when 2
-      # DO. method 2
-      '2 children'
+    when 0 then zero_child_delete(node)
+    when 1 then one_child_delete(node)
+    when 2 then two_child_delete(node)
     end
+    node.data
   end
 
   # TODO: Change error return to fit later methods
   def find(value, node = @root)
-    # node = search_tree(value)
-    # node.nil? ? 'ERROR! No node found.' : node
     return 'Value not found.' if node.nil?
     return node if node.data == value
 
@@ -123,26 +118,26 @@ class Tree
   end
 
   # TODO: Modify find() with this combination?
-  # rubocop:disable Metrics/MethodLength
-  def find_parent_child(value, node = @root)
-    if value < node.data
-      if node.left.data == value
-        [node, 'left']
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def find_parent(node, parent = @root)
+    if node.data < parent.data
+      if parent.left.data == node.data
+        [parent, 'left']
       else
-        find_parent_child(value, node.left)
+        find_parent(node, parent.left)
       end
-    elsif value > node.data
-      if node.right.data == value
-        [node, 'right']
+    elsif node.data > parent.data
+      if parent.right.data == node.data
+        [parent, 'right']
       else
-        find_parent_child(value, node.right)
+        find_parent(node, parent.right)
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-  def zero_children_delete(value)
-    parent, direction = find_parent_child(value)
+  def zero_child_delete(node)
+    parent, direction = find_parent(node)
     case direction
     when 'left' then parent.left = nil
     when 'right' then parent.right = nil
@@ -150,8 +145,8 @@ class Tree
   end
 
   # rubocop:disable Metrics/AbcSize
-  def one_child_delete(value)
-    parent, direction = find_parent_child(value)
+  def one_child_delete(node)
+    parent, direction = find_parent(node)
     case direction
     when 'left'
       parent.left = (parent.left.left.nil? ? parent.left.right : parent.left.left)
@@ -161,6 +156,9 @@ class Tree
   end
   # rubocop:enable Metrics/AbcSize
 
+  def two_child_delete(value)
+    
+  end
   # def <=>(other)
   #   data <=> other.data
   # end
