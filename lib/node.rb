@@ -4,7 +4,7 @@
 class Node
   # As a bonus, try including the Comparable module and compare nodes using
   # their data attribute.
-  include Comparable
+  # include Comparable
   attr_accessor :data, :left, :right
 
   def initialize(data, left = nil, right = nil)
