@@ -78,7 +78,21 @@ class Tree
     end
   end
 
-  def level_order; end
+  # Queue (FIFO)
+  # Recursion
+  def level_order(queue = [@root])
+    
+  end
+
+  # Iteration
+  def level_order_iteration(queue = [@root], count = 0)
+    until queue[count].nil?
+      queue << queue[count].left unless queue[count].left.nil?
+      queue << queue[count].right unless queue[count].right.nil?
+      count += 1
+    end
+    queue
+  end
 
   def inorder; end
 

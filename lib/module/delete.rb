@@ -52,15 +52,15 @@ module Delete
   end
   # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def two_child_delete(node)
     next_highest = find_next_highest(node.right)
 
+    # Will two ever be called?
     case number_of_children(next_highest)
-    when 0
-      zero_child_delete(next_highest)
-    when 1
-      one_child_delete(next_highest)
+    when 0 then zero_child_delete(next_highest)
+    when 1 then one_child_delete(next_highest)
+    when 2 then two_child_delete(next_highest)
     end
 
     next_highest.left = node.left
@@ -79,7 +79,7 @@ module Delete
     end
     node.data
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   def find_next_highest(node)
     return node if node.left.nil?

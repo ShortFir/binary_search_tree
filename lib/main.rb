@@ -31,3 +31,8 @@ puts
 print 'delete(8) = ', tree.delete(8), "\n"
 tree.pretty_print
 puts
+puts tree.level_order_iteration
+puts
+puts
+puts tree.level_order
+puts
