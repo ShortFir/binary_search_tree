@@ -36,3 +36,6 @@ puts
 puts
 puts tree.level_order
 puts
+tree.rebalance
+tree.pretty_print
+puts

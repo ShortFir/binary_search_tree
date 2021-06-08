@@ -108,7 +108,13 @@ class Tree
 
   def balanced?; end
 
-  def rebalance; end
+  def rebalance
+    array = level_order.each_with_object([]) do |node, a|
+      a << node.data
+    end
+    array.sort!.uniq!
+    @root = build_tree(array)
+  end
 
   # rubocop:disable Style/OptionalBooleanParameter
   def pretty_print(node = @root, prefix = '', is_left = true)
