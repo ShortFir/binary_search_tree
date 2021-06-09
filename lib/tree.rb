@@ -4,6 +4,7 @@ require_relative 'node'
 require_relative 'module/delete'
 
 # Tree
+# rubocop:disable Metrics/ClassLength
 class Tree
   include Delete
   attr_reader :root
@@ -98,11 +99,35 @@ class Tree
     queue
   end
 
-  def inorder; end
+  # <root><left><right>
+  def preorder(node = @root, queue = [])
+    return if node.nil?
 
-  def preorder; end
+    queue << node
+    preorder(node.left, queue)
+    preorder(node.right, queue)
+    queue
+  end
 
-  def postorder; end
+  # <left><root><right>
+  def inorder(node = @root, queue = [])
+    return if node.nil?
+
+    inorder(node.left, queue)
+    queue << node
+    inorder(node.right, queue)
+    queue
+  end
+
+  # <left><right><root>
+  def postorder(node = @root, queue = [])
+    return if node.nil?
+
+    postorder(node.left, queue)
+    postorder(node.right, queue)
+    queue << node
+    queue
+  end
 
   # REDO
   def height(node)
@@ -129,3 +154,4 @@ class Tree
   end
   # rubocop:enable Style/OptionalBooleanParameter
 end
+# rubocop:enable Metrics/ClassLength
