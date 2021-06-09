@@ -89,21 +89,37 @@ class Tree
     queue
   end
 
+  # TODO: Return array of data instead of nodes
+  # Recursion
+  # rubocop:disable Metrics/AbcSize
+  # def level_order(queue = [@root], data = [], index = 0)
+  #   return if queue[index].nil?
+
+  #   data << queue[index.data]
+  #   queue << queue[index].left unless queue[index].left.nil?
+  #   queue << queue[index].right unless queue[index].right.nil?
+  #   level_order(queue, data, index + 1)
+  #   data
+  # end
+  # rubocop:enable Metrics/AbcSize
+
   # Iteration
+  # rubocop:disable Metrics/AbcSize
   def level_order_iteration(queue = [@root], index = 0)
     until queue[index].nil?
       queue << queue[index].left unless queue[index].left.nil?
       queue << queue[index].right unless queue[index].right.nil?
       index += 1
     end
-    queue
+    queue.each_with_object([]) { |node, array| array << node.data }
   end
+  # rubocop:enable Metrics/AbcSize
 
   # <root><left><right>
   def preorder(node = @root, queue = [])
     return if node.nil?
 
-    queue << node
+    queue << node.data
     preorder(node.left, queue)
     preorder(node.right, queue)
     queue
@@ -114,7 +130,7 @@ class Tree
     return if node.nil?
 
     inorder(node.left, queue)
-    queue << node
+    queue << node.data
     inorder(node.right, queue)
     queue
   end
@@ -125,7 +141,7 @@ class Tree
 
     postorder(node.left, queue)
     postorder(node.right, queue)
-    queue << node
+    queue << node.data
     queue
   end
 

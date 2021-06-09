@@ -31,23 +31,15 @@ puts
 print 'delete(8) = ', tree.delete(8), "\n"
 tree.pretty_print
 puts
-puts tree.level_order_iteration
-puts
-puts
-puts tree.level_order
-puts
+print "Level Order Iteration: #{tree.level_order_iteration}\n\n"
+# puts
+# puts tree.level_order
+# puts
+print "Level Order:           #{tree.level_order}\n\n"
+
 tree.rebalance
 tree.pretty_print
 puts
-# puts "Height of 7 : #{tree.height(tree.find(7))}"
-# puts
-# puts "Height of 23 : #{tree.height(tree.find(23))}"
-# puts
-# puts "Height of 6345 : #{tree.height(tree.find(6345))}"
-# puts
-puts tree.preorder
-puts
-puts tree.inorder
-puts
-puts tree.postorder
-puts
+print "Preorder:  #{tree.preorder}\n\n"
+print "Inorder:   #{tree.inorder}\n\n"
+print "Postorder: #{tree.postorder}\n\n"
