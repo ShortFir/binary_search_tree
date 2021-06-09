@@ -53,7 +53,7 @@ class Tree
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
 
-  # Requires Module Delete
+  # Requires module 'Delete'
   def delete(value)
     node = find(value)
     return node if node.is_a?(String)
@@ -104,7 +104,12 @@ class Tree
 
   def postorder; end
 
-  def height(node); end
+  # REDO
+  def height(node)
+    (level_order([node]).length + 1) / 2
+  end
+
+  def depth(node); end
 
   def balanced?; end
 

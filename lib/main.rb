@@ -39,3 +39,9 @@ puts
 tree.rebalance
 tree.pretty_print
 puts
+puts "Height of 7 : #{tree.height(tree.find(7))}"
+puts
+puts "Height of 23 : #{tree.height(tree.find(23))}"
+puts
+puts "Height of 6345 : #{tree.height(tree.find(6345))}"
+puts
