@@ -32,8 +32,6 @@ class Tree
   end
 
   # Only add as leaf
-  # Less than, go left...add to left if nothing there
-  # more than, right etc...
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
   def insert(value, node = @root)
     return 'Value already exists.' if node.data == value
@@ -67,53 +65,43 @@ class Tree
     node.data
   end
 
-  # TODO: Change error return to fit later methods
+  # TODO: Change error return?
   def find(value, node = @root)
     return 'Value not found.' if node.nil?
     return node if node.data == value
 
     if value < node.data
       find(value, node.left)
-    elsif value > node.data
+    else
       find(value, node.right)
     end
   end
 
+  def level_order
+    queue = level_order_recursion
+    # queue = level_order_iteration
+    queue.each_with_object([]) { |node, array| array << node.data }
+  end
+
   # Recursion
-  def level_order(queue = [@root], index = 0)
+  def level_order_recursion(queue = [@root], index = 0)
     return if queue[index].nil?
 
     queue << queue[index].left unless queue[index].left.nil?
     queue << queue[index].right unless queue[index].right.nil?
-    level_order(queue, index + 1)
+    level_order_recursion(queue, index + 1)
     queue
   end
 
-  # TODO: Return array of data instead of nodes
-  # Recursion
-  # rubocop:disable Metrics/AbcSize
-  # def level_order(queue = [@root], data = [], index = 0)
-  #   return if queue[index].nil?
-
-  #   data << queue[index.data]
-  #   queue << queue[index].left unless queue[index].left.nil?
-  #   queue << queue[index].right unless queue[index].right.nil?
-  #   level_order(queue, data, index + 1)
-  #   data
-  # end
-  # rubocop:enable Metrics/AbcSize
-
   # Iteration
-  # rubocop:disable Metrics/AbcSize
   def level_order_iteration(queue = [@root], index = 0)
     until queue[index].nil?
       queue << queue[index].left unless queue[index].left.nil?
       queue << queue[index].right unless queue[index].right.nil?
       index += 1
     end
-    queue.each_with_object([]) { |node, array| array << node.data }
+    queue
   end
-  # rubocop:enable Metrics/AbcSize
 
   # <root><left><right>
   def preorder(node = @root, queue = [])
@@ -150,14 +138,20 @@ class Tree
     (level_order([node]).length + 1) / 2
   end
 
-  def depth(node); end
+  def depth(depth_node, node = @root, count = 0)
+    return count if depth_node == node
+
+    if depth_node.data < node.data
+      depth(depth_node, node.left, count + 1)
+    else
+      depth(depth_node, node.right, count + 1)
+    end
+  end
 
   def balanced?; end
 
   def rebalance
-    array = level_order.each_with_object([]) do |node, a|
-      a << node.data
-    end
+    array = level_order
     array.sort!.uniq!
     @root = build_tree(array)
   end
