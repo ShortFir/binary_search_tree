@@ -46,3 +46,14 @@ print "Depth(7):    #{tree.depth(tree.find(7))}\n\n"
 print "Height(7): #{tree.height(tree.find(7))}\n\n"
 print "Height(23): #{tree.height(tree.find(23))}\n\n"
 print "Height(3): #{tree.height(tree.find(3))}\n\n"
+
+print "Balanced?: #{tree.balanced?}\n\n"
+print "delete(3) = #{tree.delete(3)}\n\n"
+print "delete(5) = #{tree.delete(5)}\n\n"
+print "Balanced?: #{tree.balanced?}\n\n"
+tree.pretty_print
+puts
+tree.rebalance
+tree.pretty_print
+puts
+print "Balanced?: #{tree.balanced?}\n\n"

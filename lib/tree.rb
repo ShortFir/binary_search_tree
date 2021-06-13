@@ -148,7 +148,11 @@ class Tree
     end
   end
 
-  def balanced?; end
+  def balanced?
+    left = height(@root.left)
+    right = height(@root.right)
+    left.between?(right - 1, right + 1)
+  end
 
   def rebalance
     array = level_order
