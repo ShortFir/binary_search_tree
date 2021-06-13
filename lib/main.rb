@@ -42,3 +42,7 @@ print "Depth(6345): #{tree.depth(tree.find(6345))}\n\n"
 print "Depth(9):    #{tree.depth(tree.find(9))}\n\n"
 print "Depth(4):    #{tree.depth(tree.find(4))}\n\n"
 print "Depth(7):    #{tree.depth(tree.find(7))}\n\n"
+
+print "Height(7): #{tree.height(tree.find(7))}\n\n"
+print "Height(23): #{tree.height(tree.find(23))}\n\n"
+print "Height(3): #{tree.height(tree.find(3))}\n\n"

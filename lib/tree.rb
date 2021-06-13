@@ -133,10 +133,26 @@ class Tree
     queue
   end
 
-  # REDO
   def height(node)
-    (level_order([node]).length + 1) / 2
+    _count, max = height_rec(node)
+    max
   end
+
+  # rubocop:disable Metrics/MethodLength
+  def height_rec(node, count = 0, max = 0)
+    if node.left.nil?
+      max = count if max < count
+    else
+      count, max = height_rec(node.left, count + 1, max)
+    end
+    if node.right.nil?
+      max = count if max < count
+    else
+      count, max = height_rec(node.right, count + 1, max)
+    end
+    [count - 1, max]
+  end
+  # rubocop:enable Metrics/MethodLength
 
   def depth(depth_node, node = @root, count = 0)
     return count if depth_node == node
