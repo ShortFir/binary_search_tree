@@ -83,6 +83,8 @@ class Tree
     queue.each_with_object([]) { |node, array| array << node.data }
   end
 
+  private
+
   # Recursion
   def level_order_recursion(queue = [@root], index = 0)
     return if queue[index].nil?
@@ -102,6 +104,8 @@ class Tree
     end
     queue
   end
+
+  public
 
   # <root><left><right>
   def preorder(node = @root, queue = [])
@@ -138,6 +142,26 @@ class Tree
     max
   end
 
+  private
+
+  # rubocop:disable Metrics/MethodLength
+  def height_rec(node, count = 0, max = 0)
+    if node.left.nil?
+      max = count if max < count
+    else
+      count, max = height_rec(node.left, count + 1, max)
+    end
+    if node.right.nil?
+      max = count if max < count
+    else
+      count, max = height_rec(node.right, count + 1, max)
+    end
+    [count - 1, max]
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  public
+
   def depth(depth_node, node = @root, count = 0)
     return count if depth_node == node
 
@@ -158,6 +182,7 @@ class Tree
     array = level_order
     array.sort!.uniq!
     @root = build_tree(array)
+    'Success!'
   end
 
   # rubocop:disable Style/OptionalBooleanParameter
@@ -167,23 +192,5 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
   # rubocop:enable Style/OptionalBooleanParameter
-
-  private
-
-  # rubocop:disable Metrics/MethodLength
-  def height_rec(node, count = 0, max = 0)
-    if node.left.nil?
-      max = count if max < count
-    else
-      count, max = height_rec(node.left, count + 1, max)
-    end
-    if node.right.nil?
-      max = count if max < count
-    else
-      count, max = height_rec(node.right, count + 1, max)
-    end
-    [count - 1, max]
-  end
-  # rubocop:enable Metrics/MethodLength
 end
 # rubocop:enable Metrics/ClassLength
