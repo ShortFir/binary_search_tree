@@ -138,22 +138,6 @@ class Tree
     max
   end
 
-  # rubocop:disable Metrics/MethodLength
-  def height_rec(node, count = 0, max = 0)
-    if node.left.nil?
-      max = count if max < count
-    else
-      count, max = height_rec(node.left, count + 1, max)
-    end
-    if node.right.nil?
-      max = count if max < count
-    else
-      count, max = height_rec(node.right, count + 1, max)
-    end
-    [count - 1, max]
-  end
-  # rubocop:enable Metrics/MethodLength
-
   def depth(depth_node, node = @root, count = 0)
     return count if depth_node == node
 
@@ -179,5 +163,23 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
   # rubocop:enable Style/OptionalBooleanParameter
+
+  private
+
+  # rubocop:disable Metrics/MethodLength
+  def height_rec(node, count = 0, max = 0)
+    if node.left.nil?
+      max = count if max < count
+    else
+      count, max = height_rec(node.left, count + 1, max)
+    end
+    if node.right.nil?
+      max = count if max < count
+    else
+      count, max = height_rec(node.right, count + 1, max)
+    end
+    [count - 1, max]
+  end
+  # rubocop:enable Metrics/MethodLength
 end
 # rubocop:enable Metrics/ClassLength

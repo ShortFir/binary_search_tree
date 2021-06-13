@@ -2,6 +2,8 @@
 
 # Delete
 module Delete
+  private
+
   def number_of_children(node)
     if node.left.nil? && node.right.nil?
       0
